@@ -1,4 +1,4 @@
-import day1,day2
+import day1,day2,day3
 import aoc_utils
 
 def solve (day, example=False):
@@ -10,7 +10,9 @@ def solve (day, example=False):
         day1.solve(input)
     if day == 2:
         day2.solve(input)
-
+    if day == 3:
+        day3.solve(input)
 
 #solve(1)
-solve(2)
+#solve(2)
+solve(3)
