@@ -17,5 +17,5 @@ def solve (day, example=False):
 
 #solve(1)
 #solve(2)
-#solve(3)
-solve(4)
+solve(3)
+#solve(4)

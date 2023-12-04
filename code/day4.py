@@ -8,6 +8,7 @@ def makeshift_pow(n):
         return 0
     else:
         return pow(2,n-1)
+    
 def sum_up_the_scratch(games):
     scratch_multiples = np.array([1]*len(games))
     scratch_sum = 0
