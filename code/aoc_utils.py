@@ -7,6 +7,8 @@ def clean_line(line, day):
         return line.replace('\n','').replace(': ',':').replace('Game ','')
     if day == 3:
         return line.replace('\n','')
+    if day == 4:
+        return line.replace('\n','').replace('  ',' ').replace(' | ','|').split(':')[1][1:]
 
 def read_input(path_base, day):
     path = path_base + str(day) + '.txt'
@@ -17,3 +19,5 @@ def read_input(path_base, day):
             return [clean_line(line,day) for line in f.readlines()]
         if day == 3:
             return [[c for c in clean_line(line, day)] for line in f.readlines()]
+        if day == 4:
+            return [clean_line(line,day) for line in f.readlines()]
