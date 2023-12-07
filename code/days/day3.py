@@ -1,31 +1,33 @@
 import numpy as np
 import re
-from itertools import chain
+
 from days.base import Basesolver
 
 class Solver(Basesolver):
 
-    def set_constants(self):
-        self.size = len(self.input)
+    def process_input(self, input):
+        self.input = input
+        self.size = len(input)
 
     def set_part(self, part):
         self.part = part
         if part == 1:
             self.regex = '[^\d\.]'
+            self.engine_coordinates = self.get_coordinates()
         if part == 2:
             self.regex = '\*'
+            self.engine_coordinates = self.get_coordinates()
 
     def solve_1(self):
-        engine_coordinates = self.get_coordinates()
         numbers_with_coordinates = []
-        for position in engine_coordinates:
+        for position in self.engine_coordinates:
             for adjacent_number_coordinate in self.get_adjacent_number_coordinates(position):
                 numbers_with_coordinates += [self.get_number_and_coordinates(adjacent_number_coordinate)]
         return sum([n_w_c[3] for n_w_c in self.remove_duplicates(numbers_with_coordinates)])
 
     def solve_2(self):
         engine_power = 1
-        for position in engine_coordinates:
+        for position in self.engine_coordinates:
             numbers_with_coordinates = [self.get_number_and_coordinates(p) for p in  self.get_adjacent_number_coordinates(position)]
             distinct_numbers = [n_w_c[3] for n_w_c in self.remove_duplicates(numbers_with_coordinates)]
             if len(distinct_numbers) == 2:
