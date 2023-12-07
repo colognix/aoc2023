@@ -6,7 +6,7 @@ class Solver(Basesolver):
     def process_input(self, input):
         self.games = {}
         for game in input:
-            game_id, rounds = game.split(':')
+            game_id, rounds = game.replace(': ',':').replace('Game ','').split(':')
             self.games[int(game_id)] = [self.convert_to_dict(round) for round in self.split_rounds(rounds)]
 
     def solve_1(self):
