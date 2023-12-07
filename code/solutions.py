@@ -13,4 +13,4 @@ def solve (day, example=False):
     solver.set_part(2)
     print(solver.solve())
 
-solve(7)
+solve(3)
