@@ -1,29 +1,30 @@
 import numpy as np
+from days.base import Basesolver
 
-def process_input(input):
-    return [[set([int(n) for n in m.split(' ')]) for m in line.split('|')] for line in input]
+class Solver(Basesolver):
+    def process_input(self,input):
+        self.games = [[set([int(n) for n in m.split(' ')]) for m in line.split('|')] for line in input]
 
-def makeshift_pow(n):
-    if n == 0:
-        return 0
-    else:
-        return pow(2,n-1)
+    def solve_1(self):
+        return sum([self.makeshift_pow(len(g[0].intersection(g[1]))) for g in self.games])
     
-def sum_up_the_scratch(games):
-    scratch_multiples = np.array([1]*len(games))
-    scratch_sum = 0
-    for i in range(len(games)):
-        # how many consecutive cards are added
-        scratch_adds = len(games[i][0].intersection(games[i][1]))
-        # take into account multiplicity from earlier rounds
-        scratch_multiples[i+1:i+1+scratch_adds] += scratch_multiples[i]
-        scratch_sum += scratch_multiples[i]
+    def solve_2(self):
+        return self.sum_up_the_scratch(self.games)
 
-    return scratch_sum
+    def makeshift_pow(n):
+        if n == 0:
+            return 0
+        else:
+            return pow(2,n-1)
+        
+    def sum_up_the_scratch(games):
+        scratch_multiples = np.array([1]*len(games))
+        scratch_sum = 0
+        for i in range(len(games)):
+            # how many consecutive cards are added
+            scratch_adds = len(games[i][0].intersection(games[i][1]))
+            # take into account multiplicity from earlier rounds
+            scratch_multiples[i+1:i+1+scratch_adds] += scratch_multiples[i]
+            scratch_sum += scratch_multiples[i]
 
-def solve(input):
-    games = process_input(input)
-    # part 1
-    print(sum([makeshift_pow(len(g[0].intersection(g[1]))) for g in games]))
-    #part 2
-    print(sum_up_the_scratch(games))
+        return scratch_sum

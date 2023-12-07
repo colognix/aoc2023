@@ -1,17 +1,34 @@
 from itertools import groupby
+from days.base import Basesolver
 
-class Solver():
-    def __init__(self,input,part):
-        self.input = input
-        self.part = part
-        # types of hands
+class Solver(Basesolver):
+
+    def set_constants(self):
         self.types = ['1','2','22','3','H','4','5']
-        # map/dict for the hand sorting
+
+    def set_part(self, part):
+        self.part = part
         if part == 1:
             self.map_dict = {'A':'A','K':'B','Q':'C','J':'D','T':'E','9':'F','8':'G','7':'H','6':'I','5':'J','4':'K','3':'L','2':'M'}
         if part == 2:
             self.map_dict = {'A':'A','K':'B','Q':'C','J':'N','T':'E','9':'F','8':'G','7':'H','6':'I','5':'J','4':'K','3':'L','2':'M'}
-    
+        
+
+    def solve(self):
+        game_dict = self.create_game_dict()
+        winnings = 0
+        i = 0
+        # for each type (ascending in strength)
+        for t in self.types:
+            try:
+                # for each corresponding hand (ascending in strength)
+                for hand in reversed(sorted(game_dict[t].keys(),key=self.card_order)):
+                    i += 1
+                    winnings += i*game_dict[t][hand]
+            except KeyError:
+                pass
+        return winnings
+
     # get the type of hand
     def get_type(self,hand):
         splits = [len(list(g)) for k, g in groupby(sorted(hand))]
@@ -105,31 +122,3 @@ class Solver():
                 game_dict[self.get_type(hand_and_bid[0])] = {}
                 game_dict[self.get_type(hand_and_bid[0])][hand_and_bid[0]] = hand_and_bid[1]
         return game_dict
-
-    def get_winnings(self):
-        winnings = 0
-        i = 0
-        # for each type (ascending in strength)
-        for t in self.types:
-            try:
-                # for each corresponding hand (ascending in strength)
-                for hand in reversed(sorted(self.game_dict[t].keys(),key=self.card_order)):
-                    i += 1
-                    winnings += i*self.game_dict[t][hand]
-            except KeyError:
-                pass
-        return winnings
-    
-    def solve(self):
-        self.game_dict = self.create_game_dict()
-        return self.get_winnings()
-
-def solve(input):
-    
-    # part 1
-    solver = Solver(input,1)
-    print(solver.solve())
-
-    # part 2
-    solver = Solver(input,2)
-    print(solver.solve())
