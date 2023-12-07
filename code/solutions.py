@@ -7,7 +7,10 @@ def solve (day, example=False):
     else:
         input = aoc_utils.read_input('./input/in_day', day)
 
-    solver = import_module('days.day'+str(day))
-    solver.solve(input)
+    day = import_module('days.day'+str(day))
+    solver = day.Solver(input)
+    print(solver.solve())
+    solver.set_part(2)
+    print(solver.solve())
 
 solve(7)
