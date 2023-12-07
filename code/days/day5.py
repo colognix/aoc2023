@@ -11,7 +11,7 @@ class Solver(Basesolver):
             if len(line) == 0:
                 continue
             if ':' in line:
-                conversions += [tmp]
+                self.conversions += [tmp]
                 tmp = []
             else:
                 tmp += [[int(v) for v in line.split(' ')]]
@@ -20,17 +20,17 @@ class Solver(Basesolver):
     def solve_1(self):
         min_loc = math.inf
         for i in range(len(self.seeds)):
-            min_loc = min(min_loc,self.convert_single(self.seeds[i], self.conversion_path))
+            min_loc = min(min_loc,self.convert_single(self.seeds[i]))
         return min_loc
     
     def solve_2(self):
         min_loc = math.inf
         for i in range(0,len(self.seeds),2):
-            min_loc = min(min_loc, self.convert_bulk(self.seeds[i], self.seeds[i]+self.seeds[i+1], self.conversion_path))
+            min_loc = min(min_loc, self.convert_bulk(self.seeds[i], self.seeds[i]+self.seeds[i+1]))
         return min_loc
 
-    def convert_single(self, s, conversion_path):
-        for conversions in conversion_path:
+    def convert_single(self, s):
+        for conversions in self.conversions:
             converted = False
             for conversion in conversions:
                 if (not converted) & (s >= conversion[1]) & (s < conversion[1]+conversion[2]):
@@ -38,9 +38,9 @@ class Solver(Basesolver):
                     converted = True
         return s
 
-    def convert_bulk(self, s_start, s_end, conversion_path):
+    def convert_bulk(self, s_start, s_end):
         seeds = np.arange(s_start, s_end, dtype=float)
-        for conversions in conversion_path:
+        for conversions in self.conversions:
             converted = np.array([False]*len(seeds))
             for conversion in conversions:
                 cond = np.where((converted == False) & (seeds >= conversion[1]) & (seeds < conversion[1]+conversion[2]))

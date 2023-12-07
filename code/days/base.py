@@ -19,10 +19,10 @@ class Basesolver:
         self.part = part
 
     def solve_1(self):
-        return
+        return input
     
     def solve_2(self):
-        return
+        return input
 
     # solve, needs to be overwritten
     def solve(self):
