@@ -1,3 +1,4 @@
+from timeit import default_timer as timer
 
 class Basesolver:
 
@@ -27,6 +28,12 @@ class Basesolver:
     # solve, needs to be overwritten
     def solve(self):
         if self.part == 1:
-            return self.solve_1()
+            start = timer()
+            solution = self.solve_1()
+            print('Part 1 took ' + str(timer()-start) + ' seconds.')
+            return solution
         if self.part == 2:
-            return self.solve_2()
+            start = timer()
+            solution = self.solve_2()
+            print('Part 2 took ' + str(timer()-start) + ' seconds.')
+            return solution
