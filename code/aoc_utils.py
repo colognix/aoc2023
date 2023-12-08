@@ -4,6 +4,10 @@ def prepare_line(line, day):
     # remove linebreaks (windows..)
     line = line.replace('\n','')
 
+    # remove whitespaces
+    if day in [8]:
+        line = line.replace(' ','')
+
     # remove redundant trailing info followed by ':'
     if day in [4,6]:
         line = line.split(':')[1]
