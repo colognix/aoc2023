@@ -1,5 +1,4 @@
 from days.base import Basesolver
-import numpy as np
 from math import lcm
 
 class Solver(Basesolver):
