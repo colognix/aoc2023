@@ -13,7 +13,7 @@ def prepare_line(line, day):
         line = line.split(':')[1]
 
     # matrix
-    if day in [3,10]:
+    if day in [3,10,11]:
         line = [c for c in line]
         
     # whitespace seperated values
